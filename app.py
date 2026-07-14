@@ -3,8 +3,12 @@ import hashlib
 import re
 from urllib.parse import quote
 
-import pythoncom
-import pyttsx3
+import platform
+
+IS_WINDOWS = platform.system() == "Windows"
+if IS_WINDOWS:
+    import pythoncom
+    import pyttsx3
 import pywhatkit
 import requests
 import speech_recognition as sr
@@ -21,15 +25,16 @@ SESSION_TIMEOUT_MINUTES = 10
 def parler(text):
     # Streamlit exécute le script dans un thread secondaire : pyttsx3 (SAPI5)
     # a besoin d'un appartement COM initialisé sur ce thread pour ne pas bloquer.
-    pythoncom.CoInitialize()
+if IS_WINDOWS:
+        pythoncom.CoInitialize()
     try:
         engine = pyttsx3.init()
         engine.say(text)
         engine.runAndWait()
         engine.stop()
     finally:
-        pythoncom.CoUninitialize()
-
+        if IS_WINDOWS:
+            pythoncom.CoUninitialize()
 
 # ---------------------------------------------------------
 # Reconnaissance vocale : l'assistant écoute le micro
