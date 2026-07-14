@@ -25,7 +25,7 @@ SESSION_TIMEOUT_MINUTES = 10
 def parler(text):
     # Streamlit exécute le script dans un thread secondaire : pyttsx3 (SAPI5)
     # a besoin d'un appartement COM initialisé sur ce thread pour ne pas bloquer.
-if IS_WINDOWS:
+    if IS_WINDOWS:
         pythoncom.CoInitialize()
     try:
         engine = pyttsx3.init()
