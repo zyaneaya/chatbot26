@@ -8,7 +8,7 @@ import platform
 IS_WINDOWS = platform.system() == "Windows"
 if IS_WINDOWS:
     import pythoncom
-    import pyttsx3
+import pyttsx3
 import pywhatkit
 import requests
 import speech_recognition as sr
